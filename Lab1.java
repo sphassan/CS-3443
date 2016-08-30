@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.io.File;
+import java.math.BigDecimal;
 
 public class Lab1
 {
@@ -18,9 +19,12 @@ public class Lab1
 		}
 		
 		String token = "";
-		int nums = 0;
-		int notNums = 0;
-		double sum = 0;
+		int nums = 0; //the number of tokens that are numbers
+		int notNums = 0; //the number of tokens that are not numbers
+		//double sum = 0; //caused floating point imprecision errors (test data returns a sum of 12.600000000000001)
+		double current = 0; //stores the parsed value of the token parsed
+		BigDecimal convert = BigDecimal.valueOf(0.0); //holding variable for allowing BigDecimal addition
+		BigDecimal bdSum = BigDecimal.valueOf(0.0); //the sum of all numbers with more accurate floating points
 		
 		while (in.hasNext())
 		{
@@ -28,7 +32,10 @@ public class Lab1
 			{
 				token = in.next();
 				nums++;
-				sum += Double.parseDouble(token);
+				//sum += Double.parseDouble(token);
+				current = Double.parseDouble(token);
+				convert = BigDecimal.valueOf(current);
+				bdSum = bdSum.add(convert);
 			}
 			else
 			{
@@ -37,6 +44,7 @@ public class Lab1
 			}
 		}
 		
-		System.out.println(nums + " " + notNums + " " + sum);
+		//System.out.println(nums + " " + notNums + " " + sum);
+		System.out.println(nums + " " + notNums + " " + bdSum);
 	}
 }
